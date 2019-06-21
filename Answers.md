@@ -21,3 +21,7 @@
 6.  Which `react-redux` method links up our `components` with our `redux store`?
 
 6A. connect()
+
+
+Andy Dillon
+
