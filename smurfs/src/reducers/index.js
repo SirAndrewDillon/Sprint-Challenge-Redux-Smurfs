@@ -1,3 +1,4 @@
+//Importing from actions
 import {
   FETCHING_SMURFS,
   FETCHING_SMURFS_SUCCESS,
@@ -23,6 +24,7 @@ import {
  }
 */
 
+//Set the initial state in the reducer(s)
 const initialState = {
   smurfs: [],
   fetchingSmurfs: false,
@@ -40,6 +42,7 @@ const initialState = {
   Components can then read your store as, `state` and not `state.fooReducer`.
 */
 
+//Extend reducers to handle fetching/adding/deleting
 export default (state = initialState, action) => {
   console.log('state from reducer', state);
   switch (action.type) {
