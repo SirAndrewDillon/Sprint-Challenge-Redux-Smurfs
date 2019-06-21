@@ -1,23 +1,22 @@
 import axios from 'axios';
 
 
-/* 
-  Action Types Go Here!
-  Be sure to export each action type so you can pull it into your reducer
-*/
+// ACTION TYPES
+export const GET_SMURFS = 'GET_SMURFS';
+export const GET_SMURFS_SUCCESS = 'GET_SMURFS_SUCCESS';
+export const GET_SMURFS_FAILURE = 'GET_SMURFS_FAILURE';
 
+export const ADD_SMURF = 'ADD_SMURF';
+export const ADD_SMURF_SUCCESS = 'ADD_SMURF_SUCCESS';
+export const ADD_SMURF_FAILURE = 'ADD_SMURF_FAILURE';
 
-export const FETCHING_SMURFS = 'FETCHING_SMURFS';
-export const FETCHING_SMURFS_SUCCESS = 'FETCHING_SMURFS_SUCCESS';
-export const FETCHING_SMURFS_FAILURE = 'FETCHING_SMURFS_FAILURE';
+export const UPDATE_SMURF = 'UPDATE_SMURF';
+export const UPDATE_SMURF_SUCCESS = 'UPDATE_SMURF_SUCCESS';
+export const UPDATE_SMURF_FAILURE = 'UPDATE_SMURF_FAILURE';
 
-export const ADDING_SMURF = 'ADDING_SMURF';
-export const ADDING_SMURF_SUCCESS = 'ADDING_SMURF_SUCCESS';
-export const ADDING_SMURF_FAILURE = 'ADDING_SMURF_FAILURE';
-
-export const DELETING_SMURF = 'DELETING_SMURF';
-export const DELETING_SMURF_SUCCESS = 'DELETING_SMURF_SUCCESS';
-export const DELETING_SMURF_FAILURE = 'DELETING_SMURF_FAILURE';
+export const DELETE_SMURF = 'DELETE_SMURF';
+export const DELETE_SMURF_SUCCESS = 'DELETE_SMURF_SUCCESS';
+export const DELETE_SMURF_FAILURE = 'DELETE_SMURF_FAILURE';
 
 /*
   For this project you'll need at least 2 action creators for the main portion,
@@ -30,44 +29,50 @@ export const DELETING_SMURF_FAILURE = 'DELETING_SMURF_FAILURE';
    D - deleteSmurf
 */
 
-
-const url = 'http://localhost:3333/smurfs'
-
 export const getSmurfs = () => dispatch => {
-  dispatch({ type: FETCHING_SMURFS });
-  axios.get(url)
-    .then(({ data }) => dispatch({
-      type: FETCHING_SMURFS_SUCCESS,
-      payload: data
-    }))
-    .catch(({ data }) => dispatch({
-      type: FETCHING_SMURFS_FAILURE,
-      payload: data
-    }));
+  dispatch({ type: GET_SMURFS });
+  axios
+    .get('http://localhost:3333/smurfs')
+    .then(res => {
+      dispatch({ type: GET_SMURFS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: GET_SMURFS_FAILURE, payload: err });
+    });
 };
 
-export const addSmurf = smurf => dispatch => {
-  dispatch({ type: ADDING_SMURF });
-  axios.post(url, smurf)
-    .then(({ data }) => dispatch({
-      type: ADDING_SMURF_SUCCESS,
-      payload: data
-    }))
-    .catch(({ data }) => dispatch({
-      type: ADDING_SMURF_FAILURE,
-      payload: data
-    }));
-}
+export const addSmurf = ({ name, age, height }) => dispatch => {
+  dispatch({ type: ADD_SMURF });
+  axios
+    .post('http://localhost:3333/smurfs', { name, age, height })
+    .then(res => {
+      dispatch({ type: ADD_SMURF_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: ADD_SMURF_FAILURE, payload: err });
+    });
+};
+
+export const updateSmurf = ({ id, name, age, height }) => dispatch => {
+  dispatch({ type: UPDATE_SMURF });
+  axios
+    .put(`http://localhost:3333/smurfs/${id}`, { name, age, height })
+    .then(res => {
+      dispatch({ type: UPDATE_SMURF_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: UPDATE_SMURF_FAILURE, payload: err });
+    });
+};
 
 export const deleteSmurf = id => dispatch => {
-  dispatch({ type: DELETING_SMURF });
-  axios.delete(`${url}/${id}`)
-    .then(({ data }) => dispatch({
-      type: DELETING_SMURF_SUCCESS,
-      payload: data
-    }))
-    .catch(({ data }) => dispatch({
-      type: DELETING_SMURF_FAILURE,
-      payload: data
-    }))
-}
+  dispatch({ type: DELETE_SMURF });
+  axios
+    .delete(`http://localhost:3333/smurfs/${id}`)
+    .then(res => {
+      dispatch({ type: DELETE_SMURF_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: DELETE_SMURF_FAILURE, payload: err });
+    });
+};

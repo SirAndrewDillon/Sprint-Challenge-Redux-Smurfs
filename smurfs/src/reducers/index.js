@@ -1,31 +1,19 @@
-//Importing from actions
 import {
-  FETCHING_SMURFS,
-  FETCHING_SMURFS_SUCCESS,
-  FETCHING_SMURFS_FAILURE,
-  ADDING_SMURF,
-  ADDING_SMURF_SUCCESS,
-  ADDING_SMURF_FAILURE,
-  DELETING_SMURF,
-  DELETING_SMURF_SUCCESS,
-  DELETING_SMURF_FAILURE
-} from '../actions'
+  GET_SMURFS,
+  GET_SMURFS_FAILURE,
+  GET_SMURFS_SUCCESS,
+  ADD_SMURF,
+  ADD_SMURF_FAILURE,
+  ADD_SMURF_SUCCESS,
+  UPDATE_SMURF,
+  UPDATE_SMURF_FAILURE,
+  UPDATE_SMURF_SUCCESS,
+  DELETE_SMURF,
+  DELETE_SMURF_SUCCESS,
+  DELETE_SMURF_FAILURE
+} from '../actions';
 
-
-/*
- Your initial/default state for this project could *Although does not have to* look a lot like this
- {
-   smurfs: [],
-   fetchingSmurfs: false
-   addingSmurf: false
-   updatingSmurf: false
-   deletingSmurf: false
-   error: null
- }
-*/
-
-//Set the initial state in the reducer(s)
-const initialState = {
+const initalState = {
   smurfs: [],
   fetchingSmurfs: false,
   addingSmurf: false,
@@ -34,37 +22,79 @@ const initialState = {
   error: null
 };
 
-/*
-  You'll only need one smurf reducer for this project.
-  Feel free to export it as a default and import as rootReducer. 
-  This will guard your namespacing issues.
-  There is no need for 'combineReducers' in this project.
-  Components can then read your store as, `state` and not `state.fooReducer`.
-*/
-
-//Extend reducers to handle fetching/adding/deleting
-export default (state = initialState, action) => {
-  console.log('state from reducer', state);
+const smurfReducer = (state = initalState, action) => {
   switch (action.type) {
-    case FETCHING_SMURFS:
-      return { ...state, fetchingSmurfs: true };
-    case FETCHING_SMURFS_SUCCESS:
-      return { ...state, fetchingSmurfs: false, smurfs: action.payload };
-    case FETCHING_SMURFS_FAILURE:
-      return { ...state, fetchingSmurfs: false, error: action.payload };
-    case ADDING_SMURF:
-      return { ...state, addingSmurf: true };
-    case ADDING_SMURF_SUCCESS:
-      return { ...state, addingSmurf: false, smurfs: action.payload };
-    case ADDING_SMURF_FAILURE:
-      return { ...state, addingSmurf: false, error: action.payload };
-    case DELETING_SMURF:
-      return { ...state, deletingSmurf: true };
-    case DELETING_SMURF_SUCCESS:
-      return { ...state, deletingSmurf: false, smurfs: action.payload };
-    case DELETING_SMURF_FAILURE:
-      return { ...state, deletingSmurf: false, error: action.payload };
+    case GET_SMURFS:
+      return {
+        ...state,
+        fetchingSmurfs: true
+      };
+    case GET_SMURFS_SUCCESS:
+      return {
+        ...state,
+        smurfs: [...action.payload],
+        fetchingSmurfs: false
+      };
+    case GET_SMURFS_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        fetchingSmurfs: false
+      };
+    case ADD_SMURF:
+      return {
+        ...state,
+        addingSmurf: true
+      };
+    case ADD_SMURF_SUCCESS:
+      return {
+        ...state,
+        smurfs: [...action.payload],
+        addingSmurf: false
+      };
+    case ADD_SMURF_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        addingSmurf: false
+      };
+    case UPDATE_SMURF:
+      return {
+        ...state,
+        updatingSmurf: true
+      };
+    case UPDATE_SMURF_SUCCESS:
+      return {
+        ...state,
+        smurfs: [...action.payload],
+        updatingSmurf: false
+      };
+    case UPDATE_SMURF_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        updatingSmurf: false
+      };
+    case DELETE_SMURF:
+      return {
+        ...state,
+        deletingSmurf: true
+      };
+    case DELETE_SMURF_SUCCESS:
+      return {
+        ...state,
+        smurfs: [...action.payload],
+        deletingSmurf: false
+      };
+    case DELETE_SMURF_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        deletingSmurf: false
+      };
     default:
       return state;
   }
-}
+};
+
+export default smurfReducer;

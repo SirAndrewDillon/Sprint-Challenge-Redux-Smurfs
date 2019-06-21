@@ -1,4 +1,6 @@
 import React from 'react';
+
+
 const EditSmurf = () => {
   <div className="card">
     <input>{smurf.name}</input>
